@@ -35,7 +35,7 @@ public:
     }
 
 private:
-    /// @abi struct warranties i64
+    /// @abi table warranties i64
     struct warranty {
         account_name account;
         account_name manufacturer;
