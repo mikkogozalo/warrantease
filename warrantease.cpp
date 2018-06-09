@@ -35,6 +35,9 @@ public:
                 suffix = "\n";
             }
             p.remarks = remarks + suffix;
+            p.is_void = false;
+            p.nickname = "";
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks, "\n");
         });
     }
 
@@ -105,7 +108,9 @@ public:
         auto account_index = _warranties.template get_index<N(byaccount)>();
         auto warranty_itr = account_index.find(owner);
         while (warranty_itr != account_index.end() && warranty_itr->account == owner) {
-            print(warranty_itr->serial_number);
+            print("", name{warranty_itr->manufacturer}, "|||", warranty_itr->serial_number, "|||", name{warranty_itr->account}, "|||", warranty_itr->date_of_purchase, "|||", warranty_itr->length_of_warranty, "|||", warranty_itr->is_void, "|||", warranty_itr->coverage, "|||", warranty_itr->region, "|||", warranty_itr->contact_details, "|||", warranty_itr->nickname, "|||", warranty_itr->remarks, "\n");
+            // + name{warranty_itr->manufacturer} + "|||" + std::to_string(warranty_itr->serial_number) + "|||" + std::to_string(warranty_itr->date_of_purchase) + "|||" + std::to_string(warranty_itr->length_of_warranty) + "|||" + std::to_string(warranty_itr->is_void) + "|||" + warranty_itr->coverage + "|||" + warranty_itr->region + "|||" + warranty_itr->contact_details + "|||" + warranty_itr->nickname + "|||" + warranty_itr->remarks + "\n");
+//            print(warranty_itr->serial_number + "|||" + warranty_itr->  "\n");
             warranty_itr++;
         }
     }
@@ -155,6 +160,11 @@ private:
         account_name by_account() const { return account; }
         account_name by_manufacturer() const { return manufacturer; }
     };
+
+//    string serialize(warranty w) {
+//        return w.account + "|||" + w.manufacturer + "|||" + w.serial_number + "|||" + w.date_of_purchase + "|||" + w.length_of_warranty + "|||" + w.is_void + "|||" + w.coverage + "|||" + w.region + "|||" + w.contact_details + "|||" + w.nickname + "|||" + w.remarks + "\n"
+//
+//    }
 
     /// @abi table
     typedef eosio::multi_index<
