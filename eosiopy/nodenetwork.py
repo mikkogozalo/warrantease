@@ -29,5 +29,4 @@ class NodeNetwork(object):
     @staticmethod
     def json_to_abi(json_data):
         res = requests.post(eosio_config.url_port + eosio_config.abi_json_to_bin, json=json_data)
-        print(res.text)
         return res.json()

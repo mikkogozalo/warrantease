@@ -1,3 +1,11 @@
+import arrow
+
+from eosiopy.eosioparams import EosioParams
+from eosiopy.nodenetwork import NodeNetwork
+from eosiopy.rawinputparams import RawinputParams
+
+import arrow
+
 keys = {
     'warrantease': '5JqHARzySPxkfDoSBdiBRLKu1xgfexAFRBHozgmdmK1dFu2dt7G',
     'asus': '5HxoZKR7ffPfKABfD2LWHcxpRNseQ7Bbnk6j2B7dwrnBsBMDQpf',
@@ -6,6 +14,7 @@ keys = {
     'olivier': '5Jg1pj5jwMNfqgS3qRcmTkM7CUKcj1Unv45XL4vJDjejcaDteri',
 
 }
+
 
 class Warranty(object):
     account = None
@@ -19,20 +28,149 @@ class Warranty(object):
     contact_details = None
     nickname = None
     remarks = None
-    date_of_purchase = None
 
-    # (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend)
+    def to_json(self):
+        return {
+            'account': self.account,
+            'manufacturer': self.manufacturer,
+            'serial_number': self.serial_number,
+            'date_of_purchase': arrow.Arrow.fromtimestamp(self.date_of_purchase).humanize(),
+            'length_of_warranty': self.length_of_warranty,
+            'is_void': self.is_void,
+            'is_valid': Warranty.is_valid(self.serial_number),
+            'coverage': self.coverage,
+            'region': self.region,
+            'contact_details': self.contact_details,
+            'nickname': self.nickname,
+            'remarks': self.remarks
+        }
 
     @classmethod
-    def create(cls, account, manufacturer, serial_number, length_of_warranty, coverage, region, contact_details='', remarks=''):
+    def deserialize(cls, text):
         w = Warranty()
-        w.account = account
-        w.manufacturer = manufacturer
-        w.serial_number = serial_number
-        w.length_of_warranty = length_of_warranty
-        w.is_void = False
-        w.coverage = coverage
-        w.region = region
-        w.contact_details = contact_details
-        w.remarks = remarks
-        
+        ordering = ['manufacturer', 'serial_number', 'account', 'date_of_purchase', 'length_of_warranty', 'is_void', 'coverage', 'region', 'contact_details', 'nickname', 'remarks']
+        values = text.split('|||')
+        for k, v in zip(ordering, values):
+            setattr(w, k, v)
+        ints = ['serial_number', 'date_of_purchase', 'length_of_warranty']
+        for k in ints:
+            setattr(w, k, int(getattr(w, k)))
+        return w
+
+    @staticmethod
+    def create(account, manufacturer, serial_number, length_of_warranty, coverage='', region='', contact_details='', remarks=''):
+        raw = RawinputParams(
+            "create", {
+                "username": account,
+                "manufacturer": manufacturer,
+                "serial_number": int(serial_number),
+                "length_of_warranty": int(length_of_warranty),
+                "coverage": coverage,
+                "region": region,
+                "contact_details": contact_details,
+                "remarks": remarks
+            }, "warrantease", "{}@active".format(manufacturer)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[manufacturer])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
+
+    @staticmethod
+    def change_nick(owner, serial_number, nickname):
+        raw = RawinputParams(
+            "changenick", {
+                "owner": owner,
+                "serial_number": int(serial_number),
+                "nickname": nickname
+            }, "warrantease", "{}@active".format(owner)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[owner])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
+
+    @staticmethod
+    def add_remark(manufacturer, serial_number, remark):
+        raw = RawinputParams(
+            "addremark", {
+                "manufacturer": manufacturer,
+                "serial_number": int(serial_number),
+                "remark": remark
+            }, "warrantease", "{}@active".format(manufacturer)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[manufacturer])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
+
+    @staticmethod
+    def transfer(old_account, new_account, serial_number):
+        raw = RawinputParams(
+            "transfer", {
+                "old_account": old_account,
+                "new_account": new_account,
+                "serial_number": int(serial_number)
+            }, "warrantease", "{}@active".format(old_account)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[old_account])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
+
+    @staticmethod
+    def validate(manufacturer, serial_number):
+        raw = RawinputParams(
+            "validate", {
+                "manufacturer": manufacturer,
+                "serial_number": int(serial_number)
+            }, "warrantease", "{}@active".format(manufacturer)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[manufacturer])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
+
+    @staticmethod
+    def invalidate(manufacturer, serial_number):
+        raw = RawinputParams(
+            "invalidate", {
+                "manufacturer": manufacturer,
+                "serial_number": int(serial_number)
+            }, "warrantease", "{}@active".format(manufacturer)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[manufacturer])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
+
+    @staticmethod
+    def extend(manufacturer, serial_number, days):
+        raw = RawinputParams(
+            "extend", {
+                "manufacturer": manufacturer,
+                "serial_number": int(serial_number),
+                "days": int(days)
+            }, "warrantease", "{}@active".format(manufacturer)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[manufacturer])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
+
+    @staticmethod
+    def is_valid(serial_number):
+        raw = RawinputParams(
+            "isvalid", {
+                "serial_number": int(serial_number),
+            }, "warrantease", "{}@active".format('warrantease')
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys['warrantease'])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        return True if net['processed']['action_traces'][0]['console'] == '1' else False
+
+    @staticmethod
+    def list(owner):
+        raw = RawinputParams(
+            "list", {
+                "owner": owner,
+            }, "warrantease", "{}@active".format(owner)
+        )
+        eosiop_arams = EosioParams(raw.eos_params, keys[owner])
+        net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+        text = net['processed']['action_traces'][0]['console']
+        items = [Warranty.deserialize(_) for _ in text.split('+++') if _]
+        return items
