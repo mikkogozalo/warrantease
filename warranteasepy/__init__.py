@@ -1,5 +1,3 @@
-from datetime import datetime
-
 keys = {
     'warrantease': '5JqHARzySPxkfDoSBdiBRLKu1xgfexAFRBHozgmdmK1dFu2dt7G',
     'asus': '5HxoZKR7ffPfKABfD2LWHcxpRNseQ7Bbnk6j2B7dwrnBsBMDQpf',
@@ -37,3 +35,4 @@ class Warranty(object):
         w.region = region
         w.contact_details = contact_details
         w.remarks = remarks
+        

@@ -14,7 +14,8 @@ class RawinputParams(object):
         self.authorization = authorization
 
     def get_bin(self, json_data):
-        return NodeNetwork.json_to_abi(json_data=json_data)["binargs"]
+        bin_ = NodeNetwork.json_to_abi(json_data=json_data)
+        return bin_['binargs']
 
     @property
     def eos_params(self):

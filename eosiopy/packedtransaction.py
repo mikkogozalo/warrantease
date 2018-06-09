@@ -2,9 +2,9 @@ from eosiopy.utils import type_name_to_long
 
 
 class PackedTransaction(object):
-    bytes_list = bytearray()
 
     def __init__(self, eosio_params, chain_id):
+        self.bytes_list = bytearray()
         self.chain_id = chain_id
         params = eosio_params
         self.push_int(params["expiration"] & 0xFFFFFFFF)

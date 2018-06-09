@@ -24,7 +24,6 @@ class EosioParams(object):
         self.params.setdefault("max_net_usage_words", 0)
         self.params.setdefault("expiration", self.get_expiration())
         self.params.setdefault("signatures", list())
-        p = json.dumps(self.params)
         self.packed()
         if wif:
             self.sign(wif)
@@ -33,7 +32,7 @@ class EosioParams(object):
         self.info_block = NodeNetwork.get_info_block()
 
     def get_expiration(self):
-        return int(time.time() + 30)
+        return int(time.time() + 60)
 
     def packed(self):
         self.params["packed_trx"] = PackedTransaction(self.params, self.info_block["chain_id"])
