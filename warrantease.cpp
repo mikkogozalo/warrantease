@@ -106,6 +106,7 @@ public:
         auto warranty_itr = account_index.find(owner);
         while (warranty_itr->account == owner) {
             print(warranty_itr->serial_number);
+            break;
         }
     }
 
