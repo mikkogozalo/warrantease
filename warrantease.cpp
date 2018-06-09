@@ -58,4 +58,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(is_valid) )
+EOSIO_ABI( warrantease, (create)(isvalid) )
