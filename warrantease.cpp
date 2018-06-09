@@ -23,7 +23,7 @@ public:
         });
     }
 
-    void is_valid(uint64_t serial_number) {
+    void isvalid(uint64_t serial_number) {
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
 
