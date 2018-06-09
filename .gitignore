@@ -1,6 +1,12 @@
+venv/
 # Prerequisites
 *.d
-
+.idea/
+*/__pycache__/*
+*.wast
+*.wasm
+*.abi
+*.pyc
 # Compiled Object files
 *.slo
 *.lo

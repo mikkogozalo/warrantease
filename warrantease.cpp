@@ -43,6 +43,7 @@ public:
         require_auth(owner);
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
+        eosio_assert(itr->account == owner, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.nickname = nickname;
         });
@@ -53,6 +54,7 @@ public:
         require_auth(manufacturer);
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
+        eosio_assert(itr->manufacturer == manufacturer, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.remarks = p.remarks + remark + "\n";
         });
@@ -64,6 +66,7 @@ public:
         // TODO: Check if old account == new_account
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
+        eosio_assert(itr->account == old_account, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.account = new_account;
         });
@@ -74,11 +77,46 @@ public:
                  serial_number) {
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
-        if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) > now()) {
+        if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) > now() && !itr->is_void) {
             print("We are covered");
         } else {
             print("We are not covered");
         }
+    }
+
+    /// @abi action
+    void validate(account_name manufacturer,
+                    uint64_t serial_number) {
+        auto itr = _warranties.find(serial_number);
+        eosio_assert(itr != _warranties.end(), "Product not in database");
+        eosio_assert(itr->manufacturer == manufacturer, "This is not your product");
+        _warranties.modify(itr, get_self(), [&](auto& p ) {
+            p.is_void = false;
+        });
+    }
+
+
+    /// @abi action
+    void invalidate(account_name manufacturer,
+                    uint64_t serial_number) {
+        auto itr = _warranties.find(serial_number);
+        eosio_assert(itr != _warranties.end(), "Product not in database");
+        eosio_assert(itr->manufacturer == manufacturer, "This is not your product");
+        _warranties.modify(itr, get_self(), [&](auto& p ) {
+            p.is_void = true;
+        });
+    }
+
+    /// @abi action
+    void extend(account_name manufacturer,
+                    uint64_t serial_number, int64_t days) {
+        auto itr = _warranties.find(serial_number);
+        eosio_assert(itr != _warranties.end(), "Product not in database");
+        eosio_assert(itr->manufacturer == manufacturer, "This is not your product");
+        eosio_assert(days > 0, "Cannot shorten warranty");
+        _warranties.modify(itr, get_self(), [&](auto& p ) {
+            p.length_of_warranty += days;
+        });
     }
 
 private:
@@ -114,4 +152,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick) )
+EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend) )
