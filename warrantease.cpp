@@ -41,7 +41,7 @@ public:
         eosio_assert(itr != _warranties.end(), "Product not in database");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.remarks = p.remarks + remark + "\n";
-        }
+        });
     }
 
     void isvalid(uint64_t serial_number) {
