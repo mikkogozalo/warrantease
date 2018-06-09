@@ -78,9 +78,9 @@ public:
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
         if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) > now() && !itr->is_void) {
-            print("We are covered");
+            print(1);
         } else {
-            print("We are not covered");
+            print(0);
         }
     }
 
@@ -95,6 +95,9 @@ public:
         });
     }
 
+    /// @abi action
+    void donothing() {
+    }
 
     /// @abi action
     void invalidate(account_name manufacturer,
@@ -152,4 +155,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend) )
+EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend)(donothing) )
