@@ -23,6 +23,10 @@ public:
         });
     }
 
+    void dummy(uint64_t) {
+        
+    }
+
     void isvalid(uint64_t serial_number) {
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
@@ -58,4 +62,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid) )
+EOSIO_ABI( warrantease, (create)(isvalid)(dummy) )
