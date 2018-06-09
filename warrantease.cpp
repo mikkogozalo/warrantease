@@ -11,7 +11,14 @@ public:
     {}
 
     /// @abi action
-    void create(account_name username, account_name manufacturer, uint64_t serial_number, uint64_t length_of_warranty) {
+    void create(account_name username,
+                account_name manufacturer,
+                uint64_t serial_number,
+                uint64_t length_of_warranty,
+                string coverage,
+                string region,
+                string contact_details,
+                string remarks) {
         require_auth(manufacturer);
         uint64_t date_of_purchase = now();
         _warranties.emplace(get_self(), [&]( auto& p ) {
@@ -20,19 +27,27 @@ public:
             p.serial_number = serial_number;
             p.length_of_warranty = length_of_warranty;
             p.date_of_purchase = date_of_purchase;
+            p.coverage = coverage;
+            p.region = region;
+            p.contact_details = contact_details;
+            p.remarks = remarks + "\n";
         });
     }
 
-    void dummy(uint64_t) {
-
+    /// @abi action
+    void addremark(account_name manufacturer, uint64_t serial_number, string remark) {
+        require_auth(manufacturer);
+        auto itr = _warranties.find(serial_number);
+        eosio_assert(itr != _warranties.end(), "Product not in database");
+        _warranties.modify(itr, get_self(), [&](auto& p ) {
+            p.remarks = p.remarks + remark + "\n";
+        }
     }
 
     void isvalid(uint64_t serial_number) {
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
-        print(itr->date_of_purchase + 86400 * itr -> length_of_warranty);
-        print(now());
-        if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) <= now()) {
+        if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) > now()) {
             print("We are covered");
         } else {
             print("We are not covered");
@@ -42,11 +57,20 @@ public:
 private:
     /// @abi table warranties i64
     struct warranty {
-        account_name account;
-        account_name manufacturer;
-        uint64_t serial_number;
-        uint64_t date_of_purchase;
-        uint64_t length_of_warranty;
+        account_name account;               // DONE
+        account_name manufacturer;          // DONE
+        uint64_t serial_number;             // DONE
+        uint64_t date_of_purchase;          // computed field
+        uint64_t length_of_warranty;        // Done
+
+        bool is_void;                       //
+
+        string coverage;                    //
+        string region;                      //
+        string contact_details;             //
+        string nickname;                    //
+        string remarks;                     //
+
         uint64_t primary_key() const { return serial_number; }
         account_name by_account() const { return account; }
         account_name by_manufacturer() const { return manufacturer; }
@@ -63,4 +87,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid)(dummy) )
+EOSIO_ABI( warrantease, (create)(isvalid)(addremark) )
