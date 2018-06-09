@@ -35,7 +35,7 @@ public:
     }
 
     /// @abi action
-    void changenickname(account_name owner, uint64_t serial_number, string nickname) {
+    void changenick(account_name owner, uint64_t serial_number, string nickname) {
         require_auth(owner);
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
@@ -110,4 +110,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenickname) )
+EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick) )
