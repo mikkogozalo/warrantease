@@ -37,7 +37,7 @@ public:
             p.remarks = remarks + suffix;
             p.is_void = false;
             p.nickname = "";
-            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks, "\n");
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks);
         });
     }
 
@@ -49,6 +49,8 @@ public:
         eosio_assert(itr->account == owner, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.nickname = nickname;
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks);
+
         });
     }
 
@@ -60,6 +62,8 @@ public:
         eosio_assert(itr->manufacturer == manufacturer, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.remarks = p.remarks + remark + "\n";
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks);
+
         });
     }
 
@@ -72,6 +76,8 @@ public:
         eosio_assert(itr->account == old_account, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.account = new_account;
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks);
+
         });
     }
 
@@ -95,6 +101,8 @@ public:
         eosio_assert(itr->manufacturer == manufacturer, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.is_void = false;
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks);
+
         });
     }
 
@@ -108,7 +116,7 @@ public:
         auto account_index = _warranties.template get_index<N(byaccount)>();
         auto warranty_itr = account_index.find(owner);
         while (warranty_itr != account_index.end() && warranty_itr->account == owner) {
-            print("", name{warranty_itr->manufacturer}, "|||", warranty_itr->serial_number, "|||", name{warranty_itr->account}, "|||", warranty_itr->date_of_purchase, "|||", warranty_itr->length_of_warranty, "|||", warranty_itr->is_void, "|||", warranty_itr->coverage, "|||", warranty_itr->region, "|||", warranty_itr->contact_details, "|||", warranty_itr->nickname, "|||", warranty_itr->remarks, "\n");
+            print("", name{warranty_itr->manufacturer}, "|||", warranty_itr->serial_number, "|||", name{warranty_itr->account}, "|||", warranty_itr->date_of_purchase, "|||", warranty_itr->length_of_warranty, "|||", warranty_itr->is_void, "|||", warranty_itr->coverage, "|||", warranty_itr->region, "|||", warranty_itr->contact_details, "|||", warranty_itr->nickname, "|||", warranty_itr->remarks, "+++");
             // + name{warranty_itr->manufacturer} + "|||" + std::to_string(warranty_itr->serial_number) + "|||" + std::to_string(warranty_itr->date_of_purchase) + "|||" + std::to_string(warranty_itr->length_of_warranty) + "|||" + std::to_string(warranty_itr->is_void) + "|||" + warranty_itr->coverage + "|||" + warranty_itr->region + "|||" + warranty_itr->contact_details + "|||" + warranty_itr->nickname + "|||" + warranty_itr->remarks + "\n");
 //            print(warranty_itr->serial_number + "|||" + warranty_itr->  "\n");
             warranty_itr++;
@@ -124,6 +132,8 @@ public:
         eosio_assert(itr->manufacturer == manufacturer, "This is not your product");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.is_void = true;
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks);
+
         });
     }
 
@@ -136,6 +146,8 @@ public:
         eosio_assert(days > 0, "Cannot shorten warranty");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
             p.length_of_warranty += days;
+            print("", name{p.manufacturer}, "|||", p.serial_number, "|||", name{p.account}, "|||", p.date_of_purchase, "|||", p.length_of_warranty, "|||", p.is_void, "|||", p.coverage, "|||", p.region, "|||", p.contact_details, "|||", p.nickname, "|||", p.remarks);
+        
         });
     }
 
