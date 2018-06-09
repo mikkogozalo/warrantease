@@ -19,10 +19,23 @@ public:
             p.manufacturer = manufacturer;
             p.serial_number = serial_number;
             p.length_of_warranty = 365;
+            p.date_of_purchase = date_of_purchase;
         });
     }
+
+    void is_valid(uint64_t serial_number) {
+        auto itr = _warranties.find(serial_number);
+        eosio.assert(itr != _warranties.end(), "Product not in database");
+
+        if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) <= now()) {
+            print('We are covered');
+        } else {
+            print('We are not covered');
+        }
+    }
+
 private:
-    /// @abi struct warranties
+    /// @abi struct warranties i64
     struct warranty {
         account_name account;
         account_name manufacturer;
@@ -45,4 +58,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create) )
+EOSIO_ABI( warrantease, (create)(is_valid) )
