@@ -30,7 +30,17 @@ public:
             p.coverage = coverage;
             p.region = region;
             p.contact_details = contact_details;
-            p.remarks = remarks + "\n";
+            p.remarks = remarks + remarks == "" ? : "" : "\n";
+        });
+    }
+
+    /// @abi action
+    void changenickname(account_name owner, uint64_t serial_number, string nickname) {
+        require_auth(owner);
+        auto itr = _warranties.find(serial_number);
+        eosio_assert(itr != _warranties.end(), "Product not in database");
+        _warranties.modify(itr, get_self(), [&](auto& p ) {
+            p.nickname = nickname;
         });
     }
 
@@ -44,7 +54,20 @@ public:
         });
     }
 
-    void isvalid(uint64_t serial_number) {
+    /// @abi action
+    void transfer(account_name old_account, account_name new_account, uint64_t serial_number) {
+        require_auth(old_account);
+        // TODO: Check if old account == new_account
+        auto itr = _warranties.find(serial_number);
+        eosio_assert(itr != _warranties.end(), "Product not in database");
+        _warranties.modify(itr, get_self(), [&](auto& p ) {
+            p.account = new_account
+        });
+    }
+
+    /// @abi action
+    void isvalid(uint64_t
+                 serial_number) {
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
         if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) > now()) {
@@ -87,4 +110,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid)(addremark) )
+EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenickname) )
