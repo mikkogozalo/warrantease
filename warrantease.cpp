@@ -28,9 +28,9 @@ public:
         eosio.assert(itr != _warranties.end(), "Product not in database");
 
         if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) <= now()) {
-            print('We are covered');
+            print("We are covered");
         } else {
-            print('We are not covered');
+            print("We are not covered");
         }
     }
 
