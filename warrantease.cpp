@@ -11,20 +11,20 @@ public:
     {}
 
     /// @abi action
-    void create(account_name username, account_name manufacturer, uint64_t serial_number) {
+    void create(account_name username, account_name manufacturer, uint64_t serial_number, uint64_t length_of_warranty) {
         require_auth(manufacturer);
         uint64_t date_of_purchase = now();
         _warranties.emplace(get_self(), [&]( auto& p ) {
             p.account = username;
             p.manufacturer = manufacturer;
             p.serial_number = serial_number;
-            p.length_of_warranty = 365;
+            p.length_of_warranty = length_of_warranty;
             p.date_of_purchase = date_of_purchase;
         });
     }
 
     void dummy(uint64_t) {
-        
+
     }
 
     void isvalid(uint64_t serial_number) {
