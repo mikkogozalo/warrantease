@@ -30,7 +30,8 @@ public:
     void isvalid(uint64_t serial_number) {
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
-
+        print(itr->date_of_purchase + 86400 * itr -> length_of_warranty);
+        print(now());
         if((itr->date_of_purchase + 86400 * itr -> length_of_warranty) <= now()) {
             print("We are covered");
         } else {
