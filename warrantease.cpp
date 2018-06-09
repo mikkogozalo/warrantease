@@ -100,6 +100,17 @@ public:
     }
 
     /// @abi action
+    void list(account_name owner) {
+        require_auth(owner);
+        auto account_index = _warranties.template get_index<N(byaccount)>();
+        auto warranty_itr = account_index.find(owner);
+        while (warranty_itr != _warranties.end() && warranty_itr->account == owner) {
+            print(warranty_itr->serial_number);
+        }
+    }
+
+
+    /// @abi action
     void invalidate(account_name manufacturer,
                     uint64_t serial_number) {
         auto itr = _warranties.find(serial_number);
@@ -155,4 +166,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend)(donothing) )
+EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend)(donothing)(list) )
