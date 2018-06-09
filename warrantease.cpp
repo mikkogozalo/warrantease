@@ -61,7 +61,7 @@ public:
         auto itr = _warranties.find(serial_number);
         eosio_assert(itr != _warranties.end(), "Product not in database");
         _warranties.modify(itr, get_self(), [&](auto& p ) {
-            p.account = new_account
+            p.account = new_account;
         });
     }
 
