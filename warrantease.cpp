@@ -30,7 +30,11 @@ public:
             p.coverage = coverage;
             p.region = region;
             p.contact_details = contact_details;
-            p.remarks = remarks + (remarks == "" ? : "" : "\n");
+            string suffix = "";
+            if(remarks != ""){
+                suffix = "\n";
+            }
+            p.remarks = remarks + suffix;
         });
     }
 
