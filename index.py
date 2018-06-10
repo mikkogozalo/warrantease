@@ -13,7 +13,9 @@ def create():
 @app.route("/list", methods=['POST'])
 def list():
   json = request.get_json()
-  return jsonify([_.to_json() for _ in Warranty.list(**json)])
+  items = Warranty.list(**json)
+  items = sorted(items, key=lambda x: -x.date_of_purchase)
+  return jsonify([_.to_json() for _ in items])
 
 
 @app.route("/change_nick", methods=['POST'])
