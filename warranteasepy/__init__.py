@@ -13,7 +13,9 @@ keys = {
     'apple': '5JWRAxUNzk2rsGyU7s9syhksN4duXv97k1ccMzC3qUcgNZn9zKZ',
     'alfred': '5HwDUSDEUeRrC7YaMLpwjHr5ExdaVFbR4Rk5NdVGJ5kk5vYGwFU',
     'olivier': '5Jg1pj5jwMNfqgS3qRcmTkM7CUKcj1Unv45XL4vJDjejcaDteri',
-
+    'mikko': '5KP1sxCmruHZ8xuJP2kgkhMPWytdY6GwtoaSBarxteff51Eo7PK',
+    'samsung': '5Je5TBH8o5rra4WmikspvYMHzNQe3cYmjZRM2Ca997pW48xkXor',
+    'clara': '5JgnYTbiBGcarSisyoxdsSx797gXkZUcqui1hzz1sJWsMVSg5Q1',
 }
 
 
