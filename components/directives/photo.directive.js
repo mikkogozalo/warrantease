@@ -20,10 +20,11 @@
         link: function(scope, element, attrs) {
           var btn = angular.element(element).find('.shutter-button');
           btn.click(function() {
-            angular.element('html').animate({
-                scrollTop: angular.element('ul.purchase-list').offset().top
-            }, 500);
-
+            window.setTimeout(function() {
+              angular.element('html').animate({
+                  scrollTop: 0
+              }, 2000);
+            });
           });
         }
       };
