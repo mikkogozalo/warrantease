@@ -17,36 +17,36 @@ def list():
 
 
 @app.route("/change_nick", methods=['POST'])
-def list():
+def change_nick():
   json = request.get_json()
-  return jsonify([_.to_json() for _ in Warranty.change_nick(**json)])
+  return jsonify(Warranty.change_nick(**json).to_json())
 
 
 @app.route("/add_remark", methods=['POST'])
-def list():
+def add_remark():
   json = request.get_json()
-  return jsonify([_.to_json() for _ in Warranty.add_remark(**json)])
+  return jsonify(Warranty.add_remark(**json).to_json())
 
 
 @app.route("/transfer", methods=['POST'])
-def list():
+def transfer():
   json = request.get_json()
-  return jsonify([_.to_json() for _ in Warranty.transfer(**json)])
+  return jsonify(Warranty.transfer(**json).to_json())
 
 
 @app.route("/validate", methods=['POST'])
-def list():
+def validate():
   json = request.get_json()
-  return jsonify([_.to_json() for _ in Warranty.validate(**json)])
+  return jsonify(Warranty.validate(**json).to_json())
 
 
 @app.route("/invalidate", methods=['POST'])
-def list():
+def invalidate():
   json = request.get_json()
-  return jsonify([_.to_json() for _ in Warranty.invalidate(**json)])
+  return jsonify(Warranty.invalidate(**json).to_json())
 
 
 @app.route("/extend", methods=['POST'])
-def list():
+def extend():
   json = request.get_json()
-  return jsonify([_.to_json() for _ in Warranty.extend(**json)])
+  return jsonify(Warranty.extend(**json).to_json())

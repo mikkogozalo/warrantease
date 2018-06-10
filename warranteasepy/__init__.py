@@ -1,4 +1,5 @@
 import arrow
+from datetime import timedelta
 
 from eosiopy.eosioparams import EosioParams
 from eosiopy.nodenetwork import NodeNetwork
@@ -30,12 +31,15 @@ class Warranty(object):
     remarks = None
 
     def to_json(self):
+        dop = arrow.Arrow.fromtimestamp(self.date_of_purchase)
+        expiry = (dop + timedelta(days=self.length_of_warranty)).humanize()
         return {
             'account': self.account,
             'manufacturer': self.manufacturer,
             'serial_number': self.serial_number,
-            'date_of_purchase': arrow.Arrow.fromtimestamp(self.date_of_purchase).humanize(),
+            'date_of_purchase': dop.humanize(),
             'length_of_warranty': self.length_of_warranty,
+            'expiry': expiry,
             'is_void': self.is_void,
             'is_valid': Warranty.is_valid(self.serial_number),
             'coverage': self.coverage,
@@ -55,6 +59,7 @@ class Warranty(object):
         ints = ['serial_number', 'date_of_purchase', 'length_of_warranty']
         for k in ints:
             setattr(w, k, int(getattr(w, k)))
+        w.is_void = False if w.is_void == 'false' else True
         return w
 
     @staticmethod
@@ -76,15 +81,15 @@ class Warranty(object):
         return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
 
     @staticmethod
-    def change_nick(owner, serial_number, nickname):
+    def change_nick(account, serial_number, nickname):
         raw = RawinputParams(
             "changenick", {
-                "owner": owner,
+                "account": account,
                 "serial_number": int(serial_number),
                 "nickname": nickname
-            }, "warrantease", "{}@active".format(owner)
+            }, "warrantease", "{}@active".format(account)
         )
-        eosiop_arams = EosioParams(raw.eos_params, keys[owner])
+        eosiop_arams = EosioParams(raw.eos_params, keys[account])
         net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
         return Warranty.deserialize(net['processed']['action_traces'][0]['console'])
 
@@ -163,13 +168,13 @@ class Warranty(object):
         return True if net['processed']['action_traces'][0]['console'] == '1' else False
 
     @staticmethod
-    def list(owner):
+    def list(account):
         raw = RawinputParams(
             "list", {
-                "owner": owner,
-            }, "warrantease", "{}@active".format(owner)
+                "account": account,
+            }, "warrantease", "{}@active".format(account)
         )
-        eosiop_arams = EosioParams(raw.eos_params, keys[owner])
+        eosiop_arams = EosioParams(raw.eos_params, keys[account])
         net = NodeNetwork.push_transaction(eosiop_arams.trx_json)
         text = net['processed']['action_traces'][0]['console']
         items = [Warranty.deserialize(_) for _ in text.split('+++') if _]
