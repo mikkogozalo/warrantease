@@ -561,6 +561,11 @@ body.main-wrapper {
   padding: 10px 5px;
 }
 
+.retail-body-btn-wrapper {
+  padding: 50% 40px;
+}
+
+.retail-body-btn-wrapper button,
 .retailer-form .button-wrapper button {
   color: #ffffff;
   display: block;
@@ -572,6 +577,7 @@ body.main-wrapper {
   width: 100%;
 }
 
+.retail-body-btn-wrapper .btn-success,
 .retailer-form .button-wrapper .btn-success {
   background-color: #64be46;
   border: 1px solid #64be46;
@@ -580,8 +586,28 @@ body.main-wrapper {
   transition: all linear 0.2s;
 }
 
+.retail-body-btn-wrapper .btn-success:active,
 .retailer-form .button-wrapper .btn-success:active {
   background-color: #64be46;
+  color: #ffffff;
+}
+
+.retail-body-btn-wrapper .btn-success {
+  margin-bottom: 30px;
+}
+
+.retail-body-btn-wrapper .btn-error,
+.retailer-form .button-wrapper .btn-error {
+  background-color: #f31431;
+  border: 1px solid #f31431;
+  color: #ffffff;
+  margin-bottom: 10px;
+  transition: all linear 0.2s;
+}
+
+.retail-body-btn-wrapper .btn-error:active,
+.retailer-form .button-wrapper .btn-error:active {
+  background-color: #f31431;
   color: #ffffff;
 }
 
@@ -591,6 +617,18 @@ body.main-wrapper {
   color: #777777;
 }
 
+.retailer-form .button-wrapper .btn-small {
+  color: #f31431;
+  display: block;
+  font-size: 0.8em;
+  font-weight: 300;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 15px 20px;
+  text-transform: none;
+  width: 100%;
+}
+
 .invalidate-link {
   bottom: 30px;
   font-size: 0.8em;
@@ -598,4 +636,64 @@ body.main-wrapper {
   position: fixed;
   text-align: center;
   width: 100%;
+}
+
+/* Loader */
+.loader {
+  width: 50px;
+  height: 52px;
+  border-radius: 100%;
+  margin: 20px auto;
+}
+
+.circle {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.circle .inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  border: 5px solid rgba(222,255,201,1);
+  border-right: none;
+  border-top: none;
+  background-clip: padding;
+  box-shadow: inset 0px 0px 10px rgba(163,248,255,1);
+}
+
+.circle:nth-of-type(0) {
+  transform: rotate(0deg);
+}
+
+.circle:nth-of-type(0) .inner {
+  animation: spin 2s infinite linear;
+}
+
+.circle:nth-of-type(1) {
+  transform: rotate(70deg);
+}
+
+.circle:nth-of-type(1) .inner {
+  animation: spin 2s infinite linear;
+}
+
+.circle:nth-of-type(2) {
+  transform: rotate(140deg);
+}
+.circle:nth-of-type(2) .inner {
+  animation: spin 2s infinite linear;
+}
+
+.loader {
+  animation: spin 5s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
