@@ -1,0 +1,25 @@
+<div class="retailer-form" ng-show="isShowProductInfo === true">
+  <div class="form-card">
+    <div class="form-group">
+      <label>Serial number</label>
+      <input type="text" value="478502483949723" />
+    </div>
+    <div class="form-group">
+      <label>Coverage</label>
+      <input type="text" value="1 year" />
+    </div>
+    <div class="form-group">
+      <label>Region</label>
+      <input type="text" value="Hong Kong" />
+    </div>
+    <div class="form-group">
+      <label>Contact</label>
+      <input type="text" value="37840283 (Manufacturer)" />
+    </div>
+    <div class="button-wrapper">
+      <button class="btn-success" ng-click="registerItem()">Register</button>
+      <button class="btn-secondary" ng-click="isShowProductInfo = false">Cancel</button>
+    </div>
+  </div>
+</div>
+<div class="invalidate-link" ng-show="isShowProductInfo === true" ng-click="isShowPopup = true">Invalidate item?</div>

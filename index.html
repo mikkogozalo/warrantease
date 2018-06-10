@@ -1,0 +1,105 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-csp="" ng-app="boilerplate"> <!--<![endif]-->
+
+	<head>
+
+		<base href="/">
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>AngularJS Boilerplate</title>
+		<meta name="description" content="Simple AngularJS Boilerplate to kick start your new project with SASS support and Gulp watch/build tasks">
+
+		<!-- mobile meta -->
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+
+		<!--[if IE]>
+			<link rel="shortcut icon" href="favicon.ico">
+		<![endif]-->
+		<!-- or, set /favicon.ico for IE10 win -->
+		<meta name="msapplication-TileColor" content="#f01d4f">
+
+		<!-- CSS -->
+		<!-- build:css css/style.min.css -->
+		<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css"> -->
+		<link rel="stylesheet" type="text/html" href="styles/style.css" />
+		<!-- endbuild -->
+
+		<link rel="stylesheet" type="text/css" href="styles/main.css" />
+	</head>
+
+	<body class="main-wrapper" ng-controller="MainController">
+
+		<!--[if lt IE 8]>
+		    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<!-- Main view for templates -->
+		<div data-ng-view="" class="container"></div>
+
+	</body>
+
+	<!-- Vendors -->
+	<!-- build:nonangularlibs js/nonangularlibs.js -->
+	<script type="text/javascript" src="js/nonangular/jquery-1.11.2.min.js"></script>
+	<!-- endbuild -->
+
+	<!-- Non-angular libraries -->
+	<!-- build:libs js/libs.js -->
+	<script type="text/javascript" src="js/nonangular/lodash.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<!-- endbuild -->
+
+	<!-- Angular external libraries for application -->
+	<!-- build:angularlibs js/angularlibs.js -->
+	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+	<!-- endbuild -->
+
+	<!-- Angular components -->
+	<!-- build:appcomponents js/appcomponents.js -->
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript" src="app/config.js"></script>
+	<script type="text/javascript" src="components/services/LocalStorage.service.js"></script>
+	<script type="text/javascript" src="components/services/queryService.service.js"></script>
+	<script type="text/javascript" src="components/directives/main.nav.directive.js"></script>
+	<script type="text/javascript" src="components/directives/bottom.nav.directive.js"></script>
+	<script type="text/javascript" src="components/directives/search.bar.directive.js"></script>
+	<script type="text/javascript" src="components/directives/purchases.directive.js"></script>
+	<script type="text/javascript" src="components/directives/photo.directive.js"></script>
+	<script type="text/javascript" src="components/directives/responsive.nav.directive.js"></script>
+	<script type="text/javascript" src="components/directives/popup.directive.js"></script>
+
+	<script type="text/javascript" src="components/directives/retailer.nav.directive.js"></script>
+	<script type="text/javascript" src="components/directives/retailer.view.directive.js"></script>
+	<script type="text/javascript" src="components/directives/retailer.photo.directive.js"></script>
+	<!-- endbuild -->
+
+	<!-- Application sections -->
+	<!-- build:mainapp js/mainapp.js -->
+	<script type="text/javascript" src="app/factory.js"></script>
+	<script type="text/javascript" src="app/controller.js"></script>
+	<!-- endbuild -->
+
+	<!-- templates from $templateCache -->
+	<!-- build:templates -->
+	<!-- endbuild -->
+
+	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+	<script>
+	    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+	    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+	    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+	    e.src='https://www.google-analytics.com/analytics.js';
+	    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+	    ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+	</script>
+
+</html>

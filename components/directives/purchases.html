@@ -1,0 +1,53 @@
+<div class="my-purchases">
+  <h1 class="time">Today</h1>
+  <ul class="purchase-list" ng-class="{'push-down': isAddNewItem === true}">
+    <li class="purchase-card new-item" ng-if="isAddNewItem === true">
+      <div class="icon-section">
+        <img src="images/phone.svg" />
+      </div>
+      <div class="main-section">
+        <div class="timestamp">Just Now</div>
+        <div class="name">OnePlus 5T</div>
+        <div class="validity-text">Warranty Valid</div>
+        <div class="warranty-validity valid">
+          <img src="images/checkmark.svg" />
+        </div>
+      </div>
+    </li>
+    <li class="purchase-card" ng-repeat="purchase in purchases">
+      <div class="icon-section">
+        <img src="images/{{ purchase.iconType }}.svg" />
+      </div>
+      <div class="main-section">
+        <div class="timestamp">{{ purchase.timestamp }}</div>
+        <div class="name">{{ purchase.name }}</div>
+        <div class="validity-text">Warranty {{ purchase.warrantyValidity === true ? 'Valid' : 'Expired' }}</div>
+        <div class="warranty-validity"
+             ng-class="{'valid': purchase.warrantyValidity === true,
+                       'invalid': purchase.warrantyValidity === false} ">
+          <img src="images/checkmark.svg" ng-show="purchase.warrantyValidity === true" />
+          <img src="images/cross.svg" ng-show="purchase.warrantyValidity === false" />
+        </div>
+      </div>
+    </li>
+  </ul>
+  <h1 class="time">November 2015</h1>
+  <ul class="purchase-list" ng-class="{'push-down': isAddNewItem === true}">
+    <li class="purchase-card" ng-repeat="purchase in pastPurchases">
+      <div class="icon-section">
+        <img src="images/{{ purchase.iconType }}.svg" />
+      </div>
+      <div class="main-section">
+        <div class="timestamp">{{ purchase.timestamp }}</div>
+        <div class="name">{{ purchase.name }}</div>
+        <div class="validity-text">Warranty {{ purchase.warrantyValidity === true ? 'Valid' : 'Expired' }}</div>
+        <div class="warranty-validity"
+             ng-class="{'valid': purchase.warrantyValidity === true,
+                       'invalid': purchase.warrantyValidity === false} ">
+          <img src="images/checkmark.svg" ng-show="purchase.warrantyValidity === true" />
+          <img src="images/cross.svg" ng-show="purchase.warrantyValidity === false" />
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

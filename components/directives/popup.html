@@ -1,0 +1,11 @@
+<div class="popup" ng-if="isShowPopup">
+  <div class="shade" ng-click="isShowPopup = false"></div>
+  <div class="popup-body">
+    <h1>Invalidate this item?</h1>
+    <input class="remarks-input" type="text" placeholder="Remarks" />
+    <div class="button-wrapper">
+      <button class="btn-error" ng-click="invalidateItem()">Invalidate</button>
+      <button class="btn-secondary" ng-click="isShowPopup = false">Cancel</button>
+    </div>
+  </div>
+</div>

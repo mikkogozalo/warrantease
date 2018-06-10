@@ -1,0 +1,28 @@
+<!-- Main navigation -->
+<header class="header" role="banner" itemscope itemtype="http://schema.org/WPHeader"
+        ng-class="{'fade': isSearch === true, 'shadows': isPhotoView === true}">
+    <div id="inner-header" class="wrap container cf">
+
+        <!-- hamburger icon -->
+        <responsive-nav></responsive-nav>
+        <img class="back" src="images/cross_dark.svg"
+             ng-show="isPhotoView"
+             ng-click="isPhotoView = false" />
+
+        <h1 class="app-name"
+            ng-class="{'small': isPhotoView}">
+            {{ isPhotoView ? 'Take a photo of your receipt QR code' : header }}
+        </h1>
+
+        <img class="search" src="images/search.svg"
+            ng-show="header === 'Purchases' && !isPhotoView"
+            ng-click="toggleSearch()" />
+    </div>
+</header>
+
+<div class="responsive-wrapper">
+    <ul class="cf responsive-nav option-set">
+        <li><a href="/#/">Customer</a></li>
+        <li><a href="/#/retailer">Retailer</a></li>
+    </ul>
+</div>

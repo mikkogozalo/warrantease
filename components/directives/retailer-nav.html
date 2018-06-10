@@ -1,0 +1,28 @@
+<!-- Main navigation -->
+<header class="header" role="banner" itemscope itemtype="http://schema.org/WPHeader"
+        ng-class="{'fade': isSearch === true, 'shadows': isPhotoView === true}">
+    <div id="inner-header" class="wrap container cf">
+        <img class="back" src="images/cross_dark.svg"
+             ng-show="isPhotoView"
+             ng-click="isPhotoView = false" />
+
+        <!-- hamburger icon -->
+        <responsive-nav></responsive-nav>
+
+        <h1 class="app-name"
+            ng-class="{'small': isPhotoView}">
+          {{ isPhotoView ? 'Retailer can register product purchase' : 'Retailer View' }}
+        </h1>
+
+        <img class="retailer-photo" src="images/add_photo.svg"
+            ng-show="isPhotoView === false"
+            ng-click="isPhotoView = true" />
+    </div>
+</header>
+
+<div class="responsive-wrapper">
+    <ul class="cf responsive-nav option-set">
+        <li><a href="/#/">Customer</a></li>
+        <li><a href="/#/retailer">Retailer</a></li>
+    </ul>
+</div>
