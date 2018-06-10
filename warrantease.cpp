@@ -107,10 +107,6 @@ public:
     }
 
     /// @abi action
-    void donothing() {
-    }
-
-    /// @abi action
     void list(account_name account) {
         require_auth(account);
         auto account_index = _warranties.template get_index<N(byaccount)>();
