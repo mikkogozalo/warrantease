@@ -189,4 +189,4 @@ private:
     warranties _warranties;
 };
 
-EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend)(donothing)(list) )
+EOSIO_ABI( warrantease, (create)(isvalid)(addremark)(transfer)(changenick)(invalidate)(validate)(extend)(list) )
