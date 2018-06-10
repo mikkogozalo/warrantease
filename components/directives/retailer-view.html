@@ -1,3 +1,8 @@
+<div class="retail-body-btn-wrapper" ng-show="isShowProductInfo === false && isShowExistingProductInfo === false">
+  <button class="btn-success" ng-click="isShowProductInfo = true; isPhotoView = true;">Register Item</button>
+  <button class="btn-error" ng-click="isShowExistingProductInfo = true; isPhotoView = true;">Validate Item</button>
+</div>
+
 <div class="retailer-form" ng-show="isShowProductInfo === true">
   <div class="form-card">
     <div class="form-group">
@@ -13,8 +18,8 @@
       <input type="text" value="Hong Kong" />
     </div>
     <div class="form-group">
-      <label>Contact</label>
-      <input type="text" value="37840283 (Manufacturer)" />
+      <label>Manufacturer</label>
+      <input type="text" value="asus" />
     </div>
     <div class="button-wrapper">
       <button class="btn-success" ng-click="registerItem()">Register</button>
@@ -22,4 +27,31 @@
     </div>
   </div>
 </div>
-<div class="invalidate-link" ng-show="isShowProductInfo === true" ng-click="isShowPopup = true">Invalidate item?</div>
+<div class="retailer-form" ng-show="isShowExistingProductInfo === true">
+  <div class="form-card">
+    <div class="form-group">
+      <label>Serial number</label>
+      <input type="text" ng-model="purchases[0].serial_number" />
+    </div>
+    <div class="form-group">
+      <label>Coverage</label>
+      <input type="text" ng-model="purchases[0].coverage" />
+    </div>
+    <div class="form-group">
+      <label>Region</label>
+      <input type="text" ng-model="purchases[0].region" />
+    </div>
+    <div class="form-group">
+      <label>Manufacturer</label>
+      <input type="text" ng-model="purchases[0].manufacturer" />
+    </div>
+    <div class="form-group">
+      <label>Warranty Validity</label>
+      <input type="text" ng-model="purchases[0].expiry" />
+    </div>
+    <div class="button-wrapper">
+      <button class="btn-small" ng-click="isShowPopup = true">Invalidate?</button>
+      <button class="btn-secondary" ng-click="isShowExistingProductInfo = false">Back</button>
+    </div>
+  </div>
+</div>
